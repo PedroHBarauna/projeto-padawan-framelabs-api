@@ -1,0 +1,26 @@
+services:
+  database:
+          image: postgres:14-alpine
+          container_name: db_padawan
+          ports: 
+            - "5334:5334"
+          networks:
+            - app-network
+          environment:
+            POSTGRES_DB: projetoFramelab
+            POSTGRES_USER: padawanAdm
+            POSTGRES_PASSWORD: 123456
+  backend:
+      build:
+          dockerfile: ./config/Dockerfile
+      container_name: framelabApi
+      networks:
+          - app-network
+      ports:
+          - "3002:3002"
+      environment:
+        DB_HOST: db_padawan
+        
+networks:
+    app-network:
+        driver: bridge
