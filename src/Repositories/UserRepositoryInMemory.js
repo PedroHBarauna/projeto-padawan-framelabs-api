@@ -14,7 +14,7 @@ class UserRepositoryInMemory {
         }
     ];
 
-    async create({nome, email, senha}) {
+    async criarUsuario({nome, email, senha}) {
         const novoUsuario = {
             id: Math.floor(Math.random() * 1000) + 1,
             nome,
@@ -25,6 +25,22 @@ class UserRepositoryInMemory {
         this.usuarios.push(novoUsuario);
 
         return novoUsuario.id;
+    }
+
+    async encontrarPorId(id) {
+        const usuario = this.usuarios.find(usuario => usuario.id == id);
+        
+        return usuario;
+    }
+
+    async index() {
+        return this.usuarios;
+    }
+
+    async encontrarPorEmail(email) {
+        const usuarioComEsteEmail = this.usuarios.find(usuario => usuario.email == email);
+
+        return usuarioComEsteEmail;
     }
 
 

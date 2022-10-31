@@ -1,26 +1,48 @@
-const { response } = require("express");
-
 const userRepository = require('../Repositories/UserRepositoryInMemory');
+const AppError = require("../utils/AppError");
 
 class UserController {
     async index(req, res) {
-        return res.send('Hello, World');
+        const usuarios = await userRepository.index();
+
+        if(usuarios.length > 0) {
+            return res.json(usuarios);
+        }
+
+        throw new AppError('Nenhum usuário cadastrado.');
+        
     }
 
-    async show (req, res) {
-        const userId = req.params;
+    async show(req, res) {
+        const { id } = req.params;
+        const usuario = await userRepository.encontrarPorId(id);
 
-        return res.json({userId});
+        if (!usuario) {
+            throw new AppError('Usuário não encontrado.');
+        }
+        
+        return res.json(usuario);
     }
 
     async create(req, res) {
         const {nome, email, senha} = req.body;
 
-        const userId = await userRepository.create({nome, email, senha});
+        if (nome && email && senha) {
+            const emailIndisponivel = await userRepository.encontrarPorEmail(email);
 
+            
+            if (emailIndisponivel) {
+                throw new AppError('Este email já está cadastrado.');
+            }
 
+            const userId = await userRepository.criarUsuario({ nome, email, senha });
+    
+            if (userId) {
+                return res.status(201).json(`${nome} - id ${userId} criado com sucesso!`);
+            }
+        }
 
-        return res.status(201).json(`${nome} - id ${userId} criado com sucesso!`);
+        throw new AppError('Informe nome, email e senha.')
     }
 
 }
