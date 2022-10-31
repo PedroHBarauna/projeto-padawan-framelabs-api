@@ -1,6 +1,8 @@
 const userRepository = require('../Repositories/UserRepositoryInMemory');
 const AppError = require("../utils/AppError");
 
+const UserCreateService = require('../services/users/UserCreateService');
+const userCreateService = new UserCreateService(userRepository);
 class UserController {
     async index(req, res) {
         const usuarios = await userRepository.index();
@@ -27,19 +29,10 @@ class UserController {
     async create(req, res) {
         const {nome, email, senha} = req.body;
 
-        if (nome && email && senha) {
-            const emailIndisponivel = await userRepository.encontrarPorEmail(email);
+        const userId = await userCreateService.execute({nome, email, senha});
 
-            
-            if (emailIndisponivel) {
-                throw new AppError('Este email já está cadastrado.');
-            }
-
-            const userId = await userRepository.criarUsuario({ nome, email, senha });
-    
-            if (userId) {
-                return res.status(201).json(`${nome} - id ${userId} criado com sucesso!`);
-            }
+        if (userId) {
+            return res.status(201).json(`${nome} - id ${userId} criado com sucesso!`);
         }
 
         throw new AppError('Informe nome, email e senha.')
