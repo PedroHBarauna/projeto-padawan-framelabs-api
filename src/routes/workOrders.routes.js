@@ -8,5 +8,6 @@ const autenticar = require('../middlewares/autenticar');
 workOrdersRoutes.use(autenticar);
 
 workOrdersRoutes.post('/', workOrdersController.create);
+workOrdersRoutes.get('/', workOrdersController.index);
 
 module.exports = workOrdersRoutes;
