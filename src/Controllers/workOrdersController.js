@@ -45,6 +45,18 @@ class WorkOrdersController {
 
     // mostrar uma
 
+    async show(req, res) {
+        const {id} = req.params;
+
+        const ordem = await workOrderRepository.buscarOrdem(id);
+
+        if(ordem) {
+            return res.json(ordem);
+        }
+
+        throw new AppError('Ordem de serviço não encontrada.')
+    }
+
     // editar email do cliente, tipo da ordem, status
 
     // excluir

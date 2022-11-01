@@ -9,5 +9,6 @@ workOrdersRoutes.use(autenticar);
 
 workOrdersRoutes.post('/', workOrdersController.create);
 workOrdersRoutes.get('/', workOrdersController.index);
+workOrdersRoutes.get('/:id', workOrdersController.show);
 
 module.exports = workOrdersRoutes;

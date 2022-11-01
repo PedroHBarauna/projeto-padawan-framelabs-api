@@ -59,6 +59,12 @@ class WorkOrderRepositoryInMemory {
 
         return ordens;
     }
+
+    async buscarOrdem(ordemId) {
+        const ordem = this.ordensDeServico.find(ordem => ordem.id == ordemId);
+
+        return ordem;
+    }
 }
 
 module.exports = new WorkOrderRepositoryInMemory();
