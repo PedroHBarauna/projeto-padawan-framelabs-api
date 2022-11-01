@@ -79,6 +79,12 @@ class WorkOrderRepositoryInMemory {
         return ordemAtualizada;
         
     }
+
+    async excluirOrdem(id) {
+        this.ordensDeServico = this.ordensDeServico.filter(ordem => ordem.id != id);
+
+        return;
+    }
 }
 
 module.exports = new WorkOrderRepositoryInMemory();
