@@ -1,5 +1,9 @@
 const AppError = require("../utils/AppError");
 
+const workOrderRepository = require('../Repositories/WorkOrderRepositoryInMemory');
+const WorkOrderCreateService = require('../services/work-orders/WorkOrderCreateService');
+const workOrderCreateService = new WorkOrderCreateService(workOrderRepository);
+
 class WorkOrdersController {
     async create(req, res) {
         const userId = req.user.id;
@@ -13,26 +17,19 @@ class WorkOrdersController {
             obs 
         } = req.body;
 
-        const ordemACriar = {
-            userId,
-            nomeCliente: nomeCliente.trim(),
-            emailCliente: emailCliente.trim().tolowercase(),
-            cpfCliente: String(cpfCliente).trim(),
-            idTipoOrdem: Number(idTipoOrdem),
-            data,
-            status: 'Em andamento',
-            obs
-        }
+        const idOrdemCriada = await workOrderCreateService.executar({userId, nomeCliente, 
+            emailCliente, 
+            cpfCliente, 
+            idTipoOrdem, 
+            data, 
+            obs });
 
-        const idOrdemCriada = await workOrdersRepository.create({ordemACriar});
-
-        if (ordemCriada) {
+        if (idOrdemCriada) {
             return res.json(`Ordem de serviço ${idOrdemCriada} criada!`);
         }
 
         throw new AppError('Não foi possível completar o cadastro.')
-        
-        // nomeCliente, email, cpf, tipoOrdem, data, observação, id user, status
+    
 
     }
 
