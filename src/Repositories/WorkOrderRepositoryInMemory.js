@@ -52,7 +52,10 @@ class WorkOrderRepositoryInMemory {
     }
 
     async listarOrdens(usuario) {
-        const ordens = this.ordensDeServico.find(ordem => ordem.userId == usuario);
+        let ordens = this.ordensDeServico;
+        if (usuario) {
+            ordens = this.ordensDeServico.find(ordem => ordem.userId == usuario);
+        }
 
         return ordens;
     }
