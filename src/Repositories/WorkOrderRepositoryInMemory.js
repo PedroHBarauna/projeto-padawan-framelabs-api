@@ -65,6 +65,20 @@ class WorkOrderRepositoryInMemory {
 
         return ordem;
     }
+
+    async atualizarInfos({ordemId, status, email, idTipoOrdem}) { 
+        const ordemAtualizada = this.ordensDeServico.map(ordem =>  {
+            if(ordem.id == ordemId) {
+                ordem.status = status ?? ordem.status; 
+                ordem.emailCLiente = email ?? ordem.emailCLiente; 
+                ordem.idTipoOrdem = idTipoOrdem ?? ordem.idTipoOrdem;                
+                return ordem;
+            }
+        });
+
+        return ordemAtualizada;
+        
+    }
 }
 
 module.exports = new WorkOrderRepositoryInMemory();

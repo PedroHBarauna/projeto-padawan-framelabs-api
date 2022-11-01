@@ -58,6 +58,38 @@ class WorkOrdersController {
     }
 
     // editar email do cliente, tipo da ordem, status
+    async update(req, res) {
+        const userId = req.user.id;
+
+        const {id} = req.params;
+
+        const {email, idTipoOrdem, status} = req.body;
+
+        const ordem = await workOrderRepository.buscarOrdemPorId(id);
+
+        if (ordem) {
+            const usuarioAutorizado = ordem.userId == userId;
+
+            if (usuarioAutorizado) {
+                const novaOrdem = {
+                    ...ordem,
+                    email,
+                    idTipoOrdem,
+                    status
+                } 
+
+                const ordemAtualizada = await workOrderRepository.atualizarInfos({ordemId: id, status, email, idTipoOrdem})
+                
+                return res.json(ordemAtualizada);
+            }
+
+            throw new AppError('Somente o funcionário responsável pode fazer alterações.')
+        } 
+        
+        throw new AppError('Nota não encontrada.')
+        
+    }
+
 
     // excluir
 
