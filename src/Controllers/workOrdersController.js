@@ -48,7 +48,7 @@ class WorkOrdersController {
     async show(req, res) {
         const {id} = req.params;
 
-        const ordem = await workOrderRepository.buscarOrdem(id);
+        const ordem = await workOrderRepository.buscarOrdemPorId(id);
 
         if(ordem) {
             return res.json(ordem);

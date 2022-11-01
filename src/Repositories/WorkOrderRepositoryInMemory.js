@@ -60,7 +60,7 @@ class WorkOrderRepositoryInMemory {
         return ordens;
     }
 
-    async buscarOrdem(ordemId) {
+    async buscarOrdemPorId(ordemId) {
         const ordem = this.ordensDeServico.find(ordem => ordem.id == ordemId);
 
         return ordem;
