@@ -7,9 +7,9 @@ services:
           networks:
             - app-network
           environment:
-            POSTGRES_DB: projetoFramelab
-            POSTGRES_USER: padawanAdm
-            POSTGRES_PASSWORD: 123456
+            POSTGRES_DB: "projetoFramelab"
+            POSTGRES_USER: "padawanAdm"
+            POSTGRES_PASSWORD: "teste"
   backend:
       build:
           dockerfile: ./config/Dockerfile
