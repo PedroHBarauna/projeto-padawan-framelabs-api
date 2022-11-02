@@ -2,14 +2,15 @@ services:
   database:
           image: postgres:14-alpine
           container_name: db_padawan
+          user: postgres
           ports: 
-            - "5334:5334"
+            - "5432:5432"
           networks:
             - app-network
           environment:
             POSTGRES_DB: "projetoFramelab"
             POSTGRES_USER: "padawanAdm"
-            POSTGRES_PASSWORD: "teste"
+            POSTGRES_PASSWORD: teste
   backend:
       build:
           dockerfile: ./config/Dockerfile
