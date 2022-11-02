@@ -4,7 +4,13 @@ const sequelize = require('sequelize')
 module.exports = {
   async up (queryInterface, Sequelize) {
     
-     await queryInterface.createTable('ServiceOrder', {      
+     await queryInterface.createTable('ServiceOrder', {   
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: sequelize.INTEGER,
+      },   
       nomeCliente: {
         allowNull: false,
         type: sequelize.STRING,
@@ -18,23 +24,23 @@ module.exports = {
         allowNull: true,
         type: sequelize.STRING,
       },
-      tipoOrdem: {
+      idTipoOrdem: {
         allowNull: false,
         type: sequelize.STRING,
       },
-      dataOrdem: {
+      data: {
         allowNull: false,
         type: sequelize.DATE,
       },
-      statusOrdem: {
+      status: {
         allowNull: false,
         type: sequelize.STRING,
       },
-      observacao: {
+      obs: {
         allowNull: true,
         type: sequelize.STRING,
       },
-      codigoFuncionario: {
+      userId: {
         type: sequelize.INTEGER,
         references: {model: 'Users', key: 'id'}
       }});

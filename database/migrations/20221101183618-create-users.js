@@ -4,7 +4,7 @@ const sequelize = require('sequelize')
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
-      codigo: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -19,7 +19,7 @@ module.exports = {
         type: sequelize.STRING,
         unique: true,
       },
-      senha: {
+      senhaDoFuncionario: {
         allowNull: false,
         type: sequelize.STRING,
       }
