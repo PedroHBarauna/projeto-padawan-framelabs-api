@@ -35,9 +35,9 @@ class WorkOrdersController {
 
     // listar todas
     async index(req, res) {
-        const {usuario} = req.query;
+        const {status} = req.query;
 
-        const listaDeOrdens = await workOrderRepository.listarOrdens(usuario);
+        const listaDeOrdens = await workOrderRepository.listarOrdens(status);
 
         return res.json(listaDeOrdens);
     }

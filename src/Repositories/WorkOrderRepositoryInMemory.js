@@ -51,10 +51,10 @@ class WorkOrderRepositoryInMemory {
         return ordem.id;
     }
 
-    async listarOrdens(usuario) {
+    async listarOrdens(status) {
         let ordens = this.ordensDeServico;
-        if (usuario) {
-            ordens = this.ordensDeServico.find(ordem => ordem.userId == usuario);
+        if (status) {
+            ordens = this.ordensDeServico.find(ordem => ordem.status == status);
         }
 
         return ordens;
