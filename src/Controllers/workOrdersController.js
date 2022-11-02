@@ -111,8 +111,4 @@ class WorkOrdersController {
 
 module.exports = new WorkOrdersController();
 
-// TIPOS de serviço
 
-// id, nome, descrição, preço
-
-// criar, atualizar, deletar
