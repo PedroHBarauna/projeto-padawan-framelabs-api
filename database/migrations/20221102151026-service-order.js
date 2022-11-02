@@ -36,7 +36,7 @@ module.exports = {
       },
       codigoFuncionario: {
         type: sequelize.INTEGER,
-        references: {model: 'Users', key: 'codigo'}
+        references: {model: 'Users', key: 'id'}
       }});
 
   },
