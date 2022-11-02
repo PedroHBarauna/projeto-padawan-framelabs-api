@@ -1,6 +1,6 @@
 const AppError = require("../utils/AppError");
 
-const workOrderRepository = require('../Repositories/WorkOrderRepositoryInMemory');
+const workOrderRepository = require('../repositories/WorkOrderRepositoryInMemory');
 const WorkOrderCreateService = require('../services/work-orders/WorkOrderCreateService');
 const workOrderCreateService = new WorkOrderCreateService(workOrderRepository);
 

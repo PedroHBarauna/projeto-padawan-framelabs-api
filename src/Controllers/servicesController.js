@@ -1,6 +1,6 @@
 const AppError = require('../utils/AppError');
 
-const serviceRepository = require('../Repositories/serviceRepositoryInMemory');
+const serviceRepository = require('../repositories/serviceRepositoryInMemory');
 
 class ServicesController {
 

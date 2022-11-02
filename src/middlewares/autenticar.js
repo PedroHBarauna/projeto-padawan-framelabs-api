@@ -1,7 +1,7 @@
 const authConfig = require('../config/jwt');
 const AppError = require('../utils/AppError');
 const {verify} = require('jsonwebtoken');
-const { encontrarPorEmail } = require('../Repositories/UserRepositoryInMemory');
+const { encontrarPorEmail } = require('../repositories/UserRepositoryInMemory');
 
 async function autenticar(req, res, next) {
     const tokenComBearer = req.headers.authorization;

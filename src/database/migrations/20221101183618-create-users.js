@@ -19,7 +19,7 @@ module.exports = {
         type: sequelize.STRING,
         unique: true,
       },
-      senhaDoFuncionario: {
+      senha: {
         allowNull: false,
         type: sequelize.STRING,
       }
