@@ -1,4 +1,4 @@
-const userRepository = require('../Repositories/UserRepositoryInMemory');
+const userRepository = require('../Repositories/UserRepository');
 const AppError = require("../utils/AppError");
 
 const UserCreateService = require('../services/users/UserCreateService');
@@ -29,10 +29,10 @@ class UserController {
     async create(req, res) {
         const {nome, email, senha} = req.body;
 
-        const userId = await userCreateService.execute({nome, email, senha});
+        const user = await userCreateService.execute({nome, email, senha});
 
-        if (userId) {
-            return res.status(201).json(`${nome} - id ${userId} criado com sucesso!`);
+        if (user) {
+            return res.status(201).json(`${nome} - id ${user.id} criado com sucesso!`);
         }
 
         throw new AppError('Informe nome, email e senha.')
