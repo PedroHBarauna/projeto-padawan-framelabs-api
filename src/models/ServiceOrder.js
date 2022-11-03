@@ -1,51 +1,20 @@
-const {Model} = require('sequelize');
-const {DataTypes} = require('sequelize');
+const {Model, DataTypes} = require('sequelize');
 
-class ServiceOrder extends Model{
+class ServiceOrder extends Model {
     static init(sequelize){
         super.init({
-            id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                primaryKey: true
-            },
-            nomeCliente: {
-                allowNull: false,
-                type: DataTypes.STRING,
-              },
-              cpfCliente: {
-                allowNull: false,
-                type: DataTypes.STRING,
-                unique:true
-              },
-              emailCliente: {
-                allowNull: true,
-                type: DataTypes.STRING,
-              },
-              idTipoOrdem: {
-                allowNull: false,
-                type: DataTypes.STRING,
-              },
-              data: {
-                allowNull: false,
-                type: DataTypes.DATE,
-              },
-              status: {
-                allowNull: false,
-                type: DataTypes.STRING,
-              },
-              obs: {
-                allowNull: true,
-                type: DataTypes.STRING,
-              },
-              userId: {
-                type: DataTypes.INTEGER,
-                references: {model: 'Users', key: 'id'}
-              }
+            nomeCliente: DataTypes.STRING,
+            cpfCliente: DataTypes.STRING,
+            emailCliente: DataTypes.STRING,
+            idServico: DataTypes.INTEGER,
+            data: DataTypes.TIME,
+            status: DataTypes.STRING,
+            obs: DataTypes.STRING,
+            userId: DataTypes.INTEGER
         },{
             sequelize
         })
     }
 }
 
-module.exports = User;
+module.exports = ServiceOrder;

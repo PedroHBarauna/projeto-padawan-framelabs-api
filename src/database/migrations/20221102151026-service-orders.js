@@ -4,7 +4,7 @@ const Sequelize = require('sequelize')
 module.exports = {
   async up (queryInterface, Sequelize) {
     
-     await queryInterface.createTable('ServiceOrder', {   
+     await queryInterface.createTable('ServiceOrders', {   
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,9 +24,11 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      idTipoOrdem: {
-        allowNull: false,
-        type: Sequelize.STRING,
+      idServico: {
+        type: Sequelize.INTEGER,
+        references: {model: 'Services', key: 'id'},
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       data: {
         allowNull: false,
@@ -42,7 +44,9 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        references: {model: 'Users', key: 'id'}
+        references: {model: 'Users', key: 'id'},
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       createdAt: {
         type: Sequelize.DATE,

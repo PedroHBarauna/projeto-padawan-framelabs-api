@@ -12,6 +12,18 @@ module.exports = {
         const user = await User.create(novoUsuario)
 
         return user.dataValues;
+    },
+
+    async encontrarPorEmail(email) {
+        const usuario = await User.findOne({
+            where: { email }
+        })
+    },
+
+    async index() {
+        const users = await User.findAll();
+
+        return users;
     }
 }
 
