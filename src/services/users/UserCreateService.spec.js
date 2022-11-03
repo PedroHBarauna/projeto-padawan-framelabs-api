@@ -26,13 +26,13 @@ describe("Caso de criação de usuário", () => {
             email: 'teste4@mail.com',
             nome: 'Teste 5',
             senha: '123'
-        });
+        }); 
 
         expect(async () => {
             await userCreateService.execute({
                 email: 'teste4@mail.com',
                 nome: 'Teste 4',
-                senha: '456'
+                senha: '456' 
             });
         }).rejects.toEqual(new AppError('Este email já está cadastrado.'));
     })
