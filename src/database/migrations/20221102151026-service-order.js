@@ -1,6 +1,6 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
-const sequelize = require('sequelize')
+const Sequelize = require('sequelize')
 module.exports = {
   async up (queryInterface, Sequelize) {
     
@@ -9,41 +9,50 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: sequelize.INTEGER,
+        type: Sequelize.INTEGER,
       },   
       nomeCliente: {
         allowNull: false,
-        type: sequelize.STRING,
+        type: Sequelize.STRING,
       },
       cpfCliente: {
         allowNull: false,
-        type: sequelize.STRING,
+        type: Sequelize.STRING,
         unique:true
       },
       emailCliente: {
         allowNull: true,
-        type: sequelize.STRING,
+        type: Sequelize.STRING,
       },
       idTipoOrdem: {
         allowNull: false,
-        type: sequelize.STRING,
+        type: Sequelize.STRING,
       },
       data: {
         allowNull: false,
-        type: sequelize.DATE,
+        type: Sequelize.DATE,
       },
       status: {
         allowNull: false,
-        type: sequelize.STRING,
+        type: Sequelize.STRING,
       },
       obs: {
         allowNull: true,
-        type: sequelize.STRING,
+        type: Sequelize.STRING,
       },
       userId: {
-        type: sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         references: {model: 'Users', key: 'id'}
-      }});
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      }    
+    });
 
   },
 

@@ -1,4 +1,4 @@
-const userRepository = require('../Repositories/UserRepository');
+const userRepository = require('../repositories/UserRepository');
 const AppError = require("../utils/AppError");
 
 const UserCreateService = require('../services/users/UserCreateService');
@@ -32,7 +32,7 @@ class UserController {
         const user = await userCreateService.execute({nome, email, senha});
 
         if (user) {
-            return res.status(201).json(`${nome} - id ${user.id} criado com sucesso!`);
+            return res.status(201).json(`${user.nome} - id ${user.id} criado com sucesso!`);
         }
 
         throw new AppError('Informe nome, email e senha.')
