@@ -16,10 +16,10 @@ class UserCreateService {
                 throw new AppError('Este email já está cadastrado.');
             }
 
-            const userId = await this.userRepository.criarUsuario({ nome, email, senha });
+            const user = await this.userRepository.criarUsuario({ nome, email, senha });
     
-            if (userId) {
-                return userId;
+            if (user) {
+                return user;
             }
         }
         throw new AppError('Informe nome, email e senha.')
