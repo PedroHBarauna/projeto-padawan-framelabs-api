@@ -12,7 +12,7 @@ class WorkOrdersController {
             nomeCliente, 
             emailCliente, 
             cpfCliente, 
-            idTipoOrdem, 
+            idServico, 
             data, 
             obs 
         } = req.body;
@@ -20,7 +20,7 @@ class WorkOrdersController {
         const idOrdemCriada = await workOrderCreateService.executar({userId, nomeCliente, 
             emailCliente, 
             cpfCliente, 
-            idTipoOrdem, 
+            idServico, 
             data, 
             obs });
 

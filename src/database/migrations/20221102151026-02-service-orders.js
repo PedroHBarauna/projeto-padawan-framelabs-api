@@ -17,8 +17,7 @@ module.exports = {
       },
       cpfCliente: {
         allowNull: false,
-        type: Sequelize.STRING,
-        unique:true
+        type: Sequelize.STRING
       },
       emailCliente: {
         allowNull: true,

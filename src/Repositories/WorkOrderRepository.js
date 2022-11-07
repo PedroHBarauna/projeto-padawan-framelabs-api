@@ -7,7 +7,7 @@ module.exports = {
         nomeCliente,
         emailCliente,
         cpfCliente,
-        idTipoOrdem,
+        idServico,
         data,
         obs,
         status,
@@ -17,7 +17,7 @@ module.exports = {
             nomeCliente,
             emailCliente,
             cpfCliente,
-            idTipoOrdem,
+            idServico,
             data,
             obs,
             status,
@@ -25,7 +25,7 @@ module.exports = {
 
         const workOrder = WorkOrder.create(ordem)
 
-        return workOrder.dataValues;
+        return workOrder;
     },
 
     async listarOrdens(status) {
