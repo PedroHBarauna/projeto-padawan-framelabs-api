@@ -13,10 +13,10 @@ Mostrar específico:
 Criar novo:
 `@POST - https://localhost:3002/users`  
 
-````{
+```
+{
         "nome": "Teste 1 ",
         "email": "teste1@mail.com ",
         "senha": "123"
-    }```
-
-````
+    }
+```
