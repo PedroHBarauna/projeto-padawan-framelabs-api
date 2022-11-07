@@ -29,14 +29,20 @@ module.exports = {
     },
 
     async listarOrdens(status) {
+        let ordens = [];
         
-        const workOrder = WorkOrder.findAll({
-            where: {
-                status: status
-            }
-        })
+        if (status) {
+            ordens = WorkOrder.findAll({
+                where: {
+                    status
+                }
+            });
+        } else {
+            ordens = WorkOrder.findAll();
+        }
+        
 
-        return workOrder;
+        return ordens;
     },
 
     async buscarOrdemPorId(ordemId) {
@@ -44,7 +50,9 @@ module.exports = {
             where: {
                 id: ordemId
             }
-        })
+        });
+
+        return workOrder;
     },
 
     async atualizarInfos({ordemId, status, email, idTipoOrdem}) { 
