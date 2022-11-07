@@ -17,9 +17,15 @@ class ServicesController {
                 throw new AppError('Informe um número válido para o preço.');
             }
 
-            const servicoId = await serviceRepository.criarServico({nome, descricao, preco});
+            const nomeIndisponivel = await serviceRepository.buscarServicoPorNome(nome);
 
-            return res.status(201).json(`Serviço ${servicoId} - '${nome}' criado.`);
+            if (nomeIndisponivel) {
+                throw new AppError(`Não foi possível cadastrar, pois já existe um serviço chamado ${nome}!`)
+            }
+
+            const servico = await serviceRepository.criarServico({nome, descricao, preco});
+
+            return res.status(201).json(`Serviço ${servico.id} - '${nome}' criado.`);
         }
 
         throw new AppError('Informe nome, descrição e preço do serviço.');        
