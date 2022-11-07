@@ -4,7 +4,8 @@
     "dev": "nodemon ./src/app.js",
     "prettier": "prettier --write src/.",
     "lint": "eslint --ext .js",
-    "doc": "node swagger.js"
+    "doc": "node swagger.js",
+    "migrate": "npx sequelize db:migrate"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
@@ -28,8 +29,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run prettier && npm run lint",
-      "pre-push": "npm run prettier && npm run lint"
+
     }
   }
 }

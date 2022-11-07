@@ -2,10 +2,10 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "SCF API",
-    "description": "API desenvolvida como treino para verificar os conhecimentos já consolidados sobre back-end"
+    "title": "REST API",
+    "description": ""
   },
-  "host": "localhost:3002",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
     "http"
