@@ -23,8 +23,8 @@
     "prettier": "^2.7.1",
     "swagger": "^0.7.5"
   },
-  "husky":{
-    "hooks":{
+  "husky": {
+    "hooks": {
       "pre-commit": "npm run prettier && npm run lint",
       "pre-push": "npm run prettier && npm run lint"
     }
