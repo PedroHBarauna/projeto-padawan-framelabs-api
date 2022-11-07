@@ -28,6 +28,14 @@ module.exports = {
         const users = await User.findAll();
 
         return users;
+    },
+
+    async encontrarPorId(id) {
+        const usuario = await User.findOne({
+            where: { id }
+        });
+        
+        return usuario;
     }
 }
 
