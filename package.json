@@ -1,9 +1,4 @@
 {
-  "husky":{
-    "hooks":{
-      "pre-commit": "npm run prettier && npm run lint"
-    }
-  },
   "scripts": {
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
@@ -27,5 +22,10 @@
     "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
     "swagger": "^0.7.5"
+  },
+  "husky":{
+    "hooks":{
+      "pre-commit": "npm run prettier && npm run lint"
+    }
   }
 }
