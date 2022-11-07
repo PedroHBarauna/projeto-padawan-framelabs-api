@@ -11,4 +11,8 @@ User.init(connection);
 WorkOrder.init(connection);
 Service.init(connection);
 
+WorkOrder.associate(connection.models);
+// Service.associate(connection.models);
+// User.associate(connection.models);
+
 module.exports = connection;

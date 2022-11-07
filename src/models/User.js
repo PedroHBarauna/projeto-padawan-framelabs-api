@@ -9,7 +9,11 @@ class User extends Model {
         },{
             sequelize
         })
-    }
+    };
+
+    static associate(models) {
+        this.hasMany(models.WorkOrder, {foreignKey: 'userId', as: 'ordens'});
+    };
 }
 
 module.exports = User;

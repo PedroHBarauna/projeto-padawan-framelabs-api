@@ -33,6 +33,9 @@ module.exports = {
         
         if (status) {
             ordens = WorkOrder.findAll({
+                include: {
+                    association: 'funcionario'
+                },
                 where: {
                     status
                 }
@@ -47,6 +50,9 @@ module.exports = {
 
     async buscarOrdemPorId(ordemId) {
         const workOrder = WorkOrder.findOne({
+            include: {
+                association: 'funcionario'
+            },
             where: {
                 id: ordemId
             }

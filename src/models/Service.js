@@ -9,7 +9,11 @@ class Service extends Model {
         },{
             sequelize
         })
-    }
+    };
+
+    static associate(models) {
+        this.hasMany(models.WorkOrder, {foreignKey: 'idServico', as: 'ordens'});
+    };
 }
 
 module.exports = Service;
