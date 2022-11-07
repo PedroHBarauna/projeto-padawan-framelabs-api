@@ -30,12 +30,13 @@ module.exports = {
     },
 
     async atualizarInfos({id, nome, descricao, preco}) {
-        const servicoAtualizado = this.servicos.map(servico =>  {
-            if(servico.id == id) {
-                servico.nome = nome ?? servico.nome;
-                servico.descricao = descricao ?? servico.descricao;
-                servico.preco = preco ?? servico.preco;                
-                return servico;
+        const servicoAtualizado = Service.update({
+            nome: nome,
+            descricao: descricao,
+            preco: preco
+        },{
+            where:{
+                id: id
             }
         });
 
@@ -43,8 +44,11 @@ module.exports = {
     },
 
     async excluirServico(id) {
-        this.servicos = this.servicos.filter(servico => servico.id != id);
-
+        const servicoExcluido = Service.destroy({
+            where:{
+                id: id
+            }
+        })
         return;
     }
 }
