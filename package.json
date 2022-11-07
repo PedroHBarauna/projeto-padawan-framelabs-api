@@ -2,6 +2,8 @@
   "scripts": {
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
+    "prettier": "prettier --write src/.",
+    "lint": "eslint --ext .js",
     "doc": "node swagger.js"
   },
   "dependencies": {
@@ -23,5 +25,11 @@
     "swagger": "^0.7.5",
     "swagger-autogen": "^2.22.0",
     "swagger-ui-express": "^4.6.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier && npm run lint",
+      "pre-push": "npm run prettier && npm run lint"
+    }
   }
 }
