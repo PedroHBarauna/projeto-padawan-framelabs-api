@@ -1,16 +1,15 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
-const Sequelize = require('sequelize')
+const Sequelize = require("sequelize");
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    
-     await queryInterface.createTable('ServiceOrders', {   
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable("ServiceOrders", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },   
+      },
       nomeCliente: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -18,7 +17,7 @@ module.exports = {
       cpfCliente: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique:true
+        unique: true,
       },
       emailCliente: {
         allowNull: true,
@@ -26,9 +25,9 @@ module.exports = {
       },
       idServico: {
         type: Sequelize.INTEGER,
-        references: {model: 'Services', key: 'id'},
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        references: { model: "Services", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       data: {
         allowNull: false,
@@ -44,23 +43,22 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        references: {model: 'Users', key: 'id'},
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        references: { model: "Users", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       createdAt: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       updatedAt: {
         type: Sequelize.DATE,
-        allowNull: false
-      }    
+        allowNull: false,
+      },
     });
-
   },
 
-  async down (queryInterface, Sequelize) {
-     await queryInterface.dropTable('ServiceOrder');
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("ServiceOrder");
+  },
 };
