@@ -48,22 +48,29 @@ module.exports = {
     },
 
     async atualizarInfos({ordemId, status, email, idTipoOrdem}) { 
-        const ordemAtualizada = this.ordensDeServico.map(ordem =>  {
-            if(ordem.id == ordemId) {
-                ordem.status = status ?? ordem.status; 
-                ordem.emailCLiente = email ?? ordem.emailCLiente; 
-                ordem.idTipoOrdem = idTipoOrdem ?? ordem.idTipoOrdem;                
-                return ordem;
+        
+        const ordemAtualizada = WorkOrder.update({
+            status: status,
+            email: email,
+            idServico: idTipoOrdem
+        },
+        {
+            where:{
+                id: ordemId
             }
-        });
+        })
 
         return ordemAtualizada;
         
     },
 
     async excluirOrdem(id) {
-        this.ordensDeServico = this.ordensDeServico.filter(ordem => ordem.id != id);
-
+        const ordemExcluida = WorkOrder.destroy({
+            where:{
+                id: id
+            }
+        })
+        
         return;
     }
 }
