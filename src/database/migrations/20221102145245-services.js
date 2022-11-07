@@ -17,7 +17,6 @@ module.exports = {
       preco: {
         allowNull: false,
         type: Sequelize.REAL,
-        unique: true,
       },
       descricao: {
         allowNull: false,
