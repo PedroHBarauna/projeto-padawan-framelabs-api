@@ -1,6 +1,6 @@
 const AppError = require('../utils/AppError');
 
-const serviceRepository = require('../repositories/serviceRepositoryInMemory');
+const serviceRepository = require('../repositories/ServiceRepository');
 
 class ServicesController {
 
@@ -17,7 +17,7 @@ class ServicesController {
                 throw new AppError('Informe um número válido para o preço.');
             }
 
-            const servicoId = await serviceRepository.create({nome, descricao, preco});
+            const servicoId = await serviceRepository.criarServico({nome, descricao, preco});
 
             return res.status(201).json(`Serviço ${servicoId} - '${nome}' criado.`);
         }

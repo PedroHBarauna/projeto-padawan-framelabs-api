@@ -16,7 +16,8 @@ module.exports = {
 
     async encontrarPorEmail(email) {
         const usuario = await User.findOne({
-            where: { email }
+            where: {
+                email: email} 
         })
     },
 
