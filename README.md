@@ -7,11 +7,11 @@ Projeto de treinamento dos Padawns. Criação de uma API que simula uma ordem de
 ### Usuário:
 
 Listar todos:
-`@GET - https://localhost:3002/users`
+`@GET - https://localhost:3002/users`  
 Mostrar específico:
-`@GET - https://localhost:3002/users/:id`
+`@GET - https://localhost:3002/users/:id`  
 Criar novo:
-`@POST - https://localhost:3002/users`
+`@POST - https://localhost:3002/users`  
 
 ````{
         "nome": "Teste 1 ",
