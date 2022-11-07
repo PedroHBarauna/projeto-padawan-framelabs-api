@@ -1,15 +1,15 @@
 const {Model, DataTypes} = require('sequelize');
 
-class User extends Model {
+class Service extends Model {
     static init(sequelize){
         super.init({
             nome: DataTypes.STRING,
-            email: DataTypes.STRING,
-            senha: DataTypes.STRING
+            descricao: DataTypes.STRING,
+            preco: DataTypes.FLOAT,
         },{
             sequelize
         })
     }
 }
 
-module.exports = User;
+module.exports = Service;

@@ -1,7 +1,7 @@
 const { sign } = require('jsonwebtoken');
 const authConfig = require('../config/jwt');
 
-const UserRepositoryInMemory = require('../Repositories/UserRepositoryInMemory');
+const UserRepositoryInMemory = require('../repositories/UserRepositoryInMemory');
 const AppError = require('../utils/AppError');
 
 class SessionsController {

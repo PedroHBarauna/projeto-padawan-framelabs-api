@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const servicesRoutes = Router();
 
-const servicesController = require('../Controllers/servicesController.js');
+const servicesController = require('../controllers/servicesController.js');
 
 const autenticar = require('../middlewares/autenticar');
 

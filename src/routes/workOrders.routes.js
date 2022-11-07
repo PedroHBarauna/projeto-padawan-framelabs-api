@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const workOrdersRoutes = Router();
 
-const workOrdersController = require('../Controllers/workOrdersController.js');
+const workOrdersController = require('../controllers/workOrdersController.js');
 
 const autenticar = require('../middlewares/autenticar');
 

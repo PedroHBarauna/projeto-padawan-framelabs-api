@@ -15,6 +15,7 @@ services:
       build:
           dockerfile: ./config/Dockerfile
       container_name: framelabApi
+      command: node_modules/.bin/nodemon --exec npm start
       networks:
           - app-network
       ports:
