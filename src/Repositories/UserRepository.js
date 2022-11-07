@@ -17,8 +17,11 @@ module.exports = {
     async encontrarPorEmail(email) {
         const usuario = await User.findOne({
             where: {
-                email: email} 
-        })
+                email
+            } 
+        });
+
+        return usuario;
     },
 
     async index() {
