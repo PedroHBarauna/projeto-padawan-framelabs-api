@@ -29,7 +29,8 @@
   },
   "husky": {
     "hooks": {
-
+      "pre-commit": "npm run prettier && npm run lint",
+      "pre-push": "npm run prettier && npm run lint"
     }
   }
 }
