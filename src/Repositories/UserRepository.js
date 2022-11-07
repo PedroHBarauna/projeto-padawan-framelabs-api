@@ -1,30 +1,29 @@
-
-const User = require('../models/User');
+const User = require("../models/User");
 
 module.exports = {
-    async criarUsuario({nome, email, senha}) {
-        const novoUsuario = {
-            nome: nome,
-            email: email,
-            senha: senha
-        }
+  async criarUsuario({ nome, email, senha }) {
+    const novoUsuario = {
+      nome: nome,
+      email: email,
+      senha: senha,
+    };
 
-        const user = await User.create(novoUsuario)
+    const user = await User.create(novoUsuario);
 
-        return user.dataValues;
-    },
+    return user.dataValues;
+  },
 
-    async encontrarPorEmail(email) {
-        const usuario = await User.findOne({
-            where: {
-                email: email} 
-        })
-    },
+  async encontrarPorEmail(email) {
+    const usuario = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+  },
 
-    async index() {
-        const users = await User.findAll();
+  async index() {
+    const users = await User.findAll();
 
-        return users;
-    }
-}
-
+    return users;
+  },
+};

@@ -1,114 +1,113 @@
 const AppError = require("../utils/AppError");
 
-const workOrderRepository = require('../repositories/WorkOrderRepository');
-const WorkOrderCreateService = require('../services/work-orders/WorkOrderCreateService');
+const workOrderRepository = require("../repositories/WorkOrderRepository");
+const WorkOrderCreateService = require("../services/work-orders/WorkOrderCreateService");
 const workOrderCreateService = new WorkOrderCreateService(workOrderRepository);
 
 class WorkOrdersController {
-    async create(req, res) {
-        const userId = req.user.id;
+  async create(req, res) {
+    const userId = req.user.id;
 
-        const { 
-            nomeCliente, 
-            emailCliente, 
-            cpfCliente, 
-            idTipoOrdem, 
-            data, 
-            obs 
-        } = req.body;
+    const { nomeCliente, emailCliente, cpfCliente, idTipoOrdem, data, obs } =
+      req.body;
 
-        const idOrdemCriada = await workOrderCreateService.executar({userId, nomeCliente, 
-            emailCliente, 
-            cpfCliente, 
-            idTipoOrdem, 
-            data, 
-            obs });
+    const idOrdemCriada = await workOrderCreateService.executar({
+      userId,
+      nomeCliente,
+      emailCliente,
+      cpfCliente,
+      idTipoOrdem,
+      data,
+      obs,
+    });
 
-        if (idOrdemCriada) {
-            return res.json(`Ordem de serviço ${idOrdemCriada} criada!`);
-        }
-
-        throw new AppError('Não foi possível completar o cadastro.')
-    
-
+    if (idOrdemCriada) {
+      return res.json(`Ordem de serviço ${idOrdemCriada} criada!`);
     }
 
-    // listar todas
-    async index(req, res) {
-        const {status} = req.query;
+    throw new AppError("Não foi possível completar o cadastro.");
+  }
 
-        const listaDeOrdens = await workOrderRepository.listarOrdens(status);
+  // listar todas
+  async index(req, res) {
+    const { status } = req.query;
 
-        return res.json(listaDeOrdens);
+    const listaDeOrdens = await workOrderRepository.listarOrdens(status);
+
+    return res.json(listaDeOrdens);
+  }
+
+  // mostrar uma
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const ordem = await workOrderRepository.buscarOrdemPorId(id);
+
+    if (ordem) {
+      return res.json(ordem);
     }
 
+    throw new AppError("Ordem de serviço não encontrada.");
+  }
 
-    // mostrar uma
+  // editar email do cliente, tipo da ordem, status
+  async update(req, res) {
+    const userId = req.user.id;
 
-    async show(req, res) {
-        const {id} = req.params;
+    const { id } = req.params;
 
-        const ordem = await workOrderRepository.buscarOrdemPorId(id);
+    const { email, idTipoOrdem, status } = req.body;
 
-        if(ordem) {
-            return res.json(ordem);
-        }
+    const ordem = await workOrderRepository.buscarOrdemPorId(id);
 
-        throw new AppError('Ordem de serviço não encontrada.')
+    if (ordem) {
+      const usuarioAutorizado = ordem.userId == userId;
+
+      if (usuarioAutorizado) {
+        const ordemAtualizada = await workOrderRepository.atualizarInfos({
+          ordemId: id,
+          status,
+          email,
+          idTipoOrdem,
+        });
+
+        return res.json(ordemAtualizada);
+      }
+
+      throw new AppError(
+        "Somente o funcionário responsável pode fazer alterações.",
+        401
+      );
     }
 
-    // editar email do cliente, tipo da ordem, status
-    async update(req, res) {
-        const userId = req.user.id;
+    throw new AppError("Nota não encontrada.");
+  }
 
-        const {id} = req.params;
+  // excluir
+  async delete(req, res) {
+    const userId = req.user.id;
 
-        const {email, idTipoOrdem, status} = req.body;
+    const { id } = req.params;
+    const ordem = await workOrderRepository.buscarOrdemPorId(id);
 
-        const ordem = await workOrderRepository.buscarOrdemPorId(id);
+    if (ordem) {
+      const usuarioAutorizado = ordem.userId == userId;
 
-        if (ordem) {
-            const usuarioAutorizado = ordem.userId == userId;
+      if (usuarioAutorizado) {
+        await workOrderRepository.excluirOrdem(id);
 
-            if (usuarioAutorizado) {
-                const ordemAtualizada = await workOrderRepository.atualizarInfos({ordemId: id, status, email, idTipoOrdem})
-                
-                return res.json(ordemAtualizada);
-            }
+        return res.json(`Ordem de serviço ${id} excluída com sucesso.`);
+      }
 
-            throw new AppError('Somente o funcionário responsável pode fazer alterações.', 401)
-        } 
-        
-        throw new AppError('Nota não encontrada.')
-        
+      throw new AppError(
+        "Somente o funcionário responsável pode excluir a ordem de serviço.",
+        401
+      );
     }
 
-
-    // excluir
-    async delete(req, res) {
-        const userId = req.user.id;
-
-        const {id} = req.params;
-        const ordem = await workOrderRepository.buscarOrdemPorId(id);
-
-        if (ordem) {
-            const usuarioAutorizado = ordem.userId == userId;
-
-            if (usuarioAutorizado) {
-                await workOrderRepository.excluirOrdem(id);
-
-                return res.json(`Ordem de serviço ${id} excluída com sucesso.`)
-            }
-
-            throw new AppError('Somente o funcionário responsável pode excluir a ordem de serviço.', 401);
-        } 
-        
-        throw new AppError('Ordem de serviço não encontrada.')
-    }
-
-
+    throw new AppError("Ordem de serviço não encontrada.");
+  }
 }
 
 module.exports = new WorkOrdersController();
-
-

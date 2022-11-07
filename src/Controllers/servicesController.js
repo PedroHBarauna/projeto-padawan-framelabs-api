@@ -1,88 +1,88 @@
-const AppError = require('../utils/AppError');
+const AppError = require("../utils/AppError");
 
-const serviceRepository = require('../repositories/ServiceRepository');
+const serviceRepository = require("../repositories/ServiceRepository");
 
 class ServicesController {
+  // TIPOS de serviço
 
-    // TIPOS de serviço
+  // id, nome, descrição, preço
 
-    // id, nome, descrição, preço
+  // criar, atualizar, deletar, mostrar
+  async create(req, res) {
+    const { nome, descricao, preco } = req.body;
 
-    // criar, atualizar, deletar, mostrar
-    async create(req, res) {
-        const {nome, descricao, preco} = req.body;
+    if (nome && descricao && preco) {
+      if (isNaN(preco)) {
+        throw new AppError("Informe um número válido para o preço.");
+      }
 
-        if (nome && descricao && preco) {
-            if (isNaN(preco)) {
-                throw new AppError('Informe um número válido para o preço.');
-            }
+      const servicoId = await serviceRepository.criarServico({
+        nome,
+        descricao,
+        preco,
+      });
 
-            const servicoId = await serviceRepository.criarServico({nome, descricao, preco});
-
-            return res.status(201).json(`Serviço ${servicoId} - '${nome}' criado.`);
-        }
-
-        throw new AppError('Informe nome, descrição e preço do serviço.');        
+      return res.status(201).json(`Serviço ${servicoId} - '${nome}' criado.`);
     }
 
-    async index(req, res) {
-        const servicos = await serviceRepository.index();
+    throw new AppError("Informe nome, descrição e preço do serviço.");
+  }
 
-        if (servicos.length > 0) {
-            return res.json(servicos);
-        }
+  async index(req, res) {
+    const servicos = await serviceRepository.index();
 
-        throw new AppError('Não foram encontrados registros.');
-
+    if (servicos.length > 0) {
+      return res.json(servicos);
     }
 
-    async show(req, res) {
-        const {id} = req.params;
+    throw new AppError("Não foram encontrados registros.");
+  }
 
-        const servico = await serviceRepository.buscarServicoPorId(id);
+  async show(req, res) {
+    const { id } = req.params;
 
-        if (servico) {
-            return res.json(servico);
-        }
+    const servico = await serviceRepository.buscarServicoPorId(id);
 
-        throw new AppError('Serviço não encontrado.')
-
+    if (servico) {
+      return res.json(servico);
     }
 
-    async update(req, res) {
-        const {id} = req.params;
+    throw new AppError("Serviço não encontrado.");
+  }
 
-        const {nome, descricao, preco} = req.body;
+  async update(req, res) {
+    const { id } = req.params;
 
-        if (preco && isNaN(preco)) {
-            throw new AppError('Informe um número válido para o preço.');
-        }
+    const { nome, descricao, preco } = req.body;
 
-        const servico = await serviceRepository.buscarServicoPorId(id);
-
-        servico.nome = nome ?? servico.nome;
-        servico.descricao = descricao ?? servico.descricao;
-        servico.preco = preco ?? servico.preco;
-        servico.id = id;
-
-        const servicoAtualizado = await serviceRepository.atualizarInfos(servico);
-
-        return res.status(201).json(servicoAtualizado);
-
+    if (preco && isNaN(preco)) {
+      throw new AppError("Informe um número válido para o preço.");
     }
 
-    async delete(req, res) {
-        const {id} = req.params;
-        const servico = await serviceRepository.buscarServicoPorId(id);
+    const servico = await serviceRepository.buscarServicoPorId(id);
 
-        if (servico) {
-            await serviceRepository.excluirServico(id);
+    servico.nome = nome ?? servico.nome;
+    servico.descricao = descricao ?? servico.descricao;
+    servico.preco = preco ?? servico.preco;
+    servico.id = id;
 
-            return res.json(`Serviço ${id} excluído com sucesso.`)
-        } 
-        
-        throw new AppError('Serviço não encontrado.')
+    const servicoAtualizado = await serviceRepository.atualizarInfos(servico);
+
+    return res.status(201).json(servicoAtualizado);
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+    const servico = await serviceRepository.buscarServicoPorId(id);
+
+    if (servico) {
+      await serviceRepository.excluirServico(id);
+
+      return res.json(`Serviço ${id} excluído com sucesso.`);
     }
+
+    throw new AppError("Serviço não encontrado.");
+  }
 }
 
 module.exports = new ServicesController();

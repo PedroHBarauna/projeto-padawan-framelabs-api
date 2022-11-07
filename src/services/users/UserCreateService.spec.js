@@ -1,39 +1,39 @@
-const AppError = require('../../utils/AppError');
+const AppError = require("../../utils/AppError");
 
 describe("Caso de criação de usuário", () => {
-    let userRepositoryInMemory = null;
-    let userCreateService = null;
+  let userRepositoryInMemory = null;
+  let userCreateService = null;
 
-    beforeEach(async () => {
-        userRepositoryInMemory = require('../../Repositories/UserRepositoryInMemory');
-        
-        const UserCreateService = require('./UserCreateService');
-        userCreateService = new UserCreateService(userRepositoryInMemory);
+  beforeEach(async () => {
+    userRepositoryInMemory = require("../../Repositories/UserRepositoryInMemory");
+
+    const UserCreateService = require("./UserCreateService");
+    userCreateService = new UserCreateService(userRepositoryInMemory);
+  });
+
+  it("Devo criar um usuário", async () => {
+    const userId = await userCreateService.execute({
+      email: "teste3@mail.com",
+      nome: "Teste 4",
+      senha: "123",
     });
 
-    it("Devo criar um usuário", async () => {
-        const userId = await userCreateService.execute({
-            email: 'teste3@mail.com',
-            nome: 'Teste 4',
-            senha: '123'
-        });
+    expect(userId).toEqual(expect.any(Number));
+  });
 
-        expect(userId).toEqual(expect.any(Number));
+  it("Devo retornar um erro caso o email já esteja cadastrado.", async () => {
+    await userCreateService.execute({
+      email: "teste4@mail.com",
+      nome: "Teste 5",
+      senha: "123",
     });
 
-    it("Devo retornar um erro caso o email já esteja cadastrado.", async () => {
-        await userCreateService.execute({
-            email: 'teste4@mail.com',
-            nome: 'Teste 5',
-            senha: '123'
-        }); 
-
-        expect(async () => {
-            await userCreateService.execute({
-                email: 'teste4@mail.com',
-                nome: 'Teste 4',
-                senha: '456' 
-            });
-        }).rejects.toEqual(new AppError('Este email já está cadastrado.'));
-    })
+    expect(async () => {
+      await userCreateService.execute({
+        email: "teste4@mail.com",
+        nome: "Teste 4",
+        senha: "456",
+      });
+    }).rejects.toEqual(new AppError("Este email já está cadastrado."));
+  });
 });

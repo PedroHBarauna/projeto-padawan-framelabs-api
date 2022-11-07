@@ -1,76 +1,74 @@
-const WorkOrder = require('../models/WorkOrder')
+const WorkOrder = require("../models/WorkOrder");
 
 module.exports = {
+  async cadastrarOrdem({
+    userId,
+    nomeCliente,
+    emailCliente,
+    cpfCliente,
+    idTipoOrdem,
+    data,
+    obs,
+    status,
+  }) {
+    const ordem = {
+      userId,
+      nomeCliente,
+      emailCliente,
+      cpfCliente,
+      idTipoOrdem,
+      data,
+      obs,
+      status,
+    };
 
-    async cadastrarOrdem({
-        userId,
-        nomeCliente,
-        emailCliente,
-        cpfCliente,
-        idTipoOrdem,
-        data,
-        obs,
-        status,
-    }){
-        const ordem = {
-            userId,
-            nomeCliente,
-            emailCliente,
-            cpfCliente,
-            idTipoOrdem,
-            data,
-            obs,
-            status,
-        };
+    const workOrder = WorkOrder.create(ordem);
 
-        const workOrder = WorkOrder.create(ordem)
+    return workOrder.dataValues;
+  },
 
-        return workOrder.dataValues;
-    },
+  async listarOrdens(status) {
+    const workOrder = WorkOrder.findAll({
+      where: {
+        status: status,
+      },
+    });
 
-    async listarOrdens(status) {
-        
-        const workOrder = WorkOrder.findAll({
-            where: {
-                status: status
-            }
-        })
+    return workOrder;
+  },
 
-        return workOrder;
-    },
+  async buscarOrdemPorId(ordemId) {
+    const workOrder = WorkOrder.findOne({
+      where: {
+        id: ordemId,
+      },
+    });
+  },
 
-    async buscarOrdemPorId(ordemId) {
-        const workOrder = WorkOrder.findOne({
-            where: {
-                id: ordemId
-            }
-        })
-    },
-
-    async atualizarInfos({ordemId, status, email, idTipoOrdem}) { 
-        
-        const ordemAtualizada = WorkOrder.update({
-            status: status,
-            email: email,
-            idServico: idTipoOrdem
+  async atualizarInfos({ ordemId, status, email, idTipoOrdem }) {
+    const ordemAtualizada = WorkOrder.update(
+      {
+        status: status,
+        email: email,
+        idServico: idTipoOrdem,
+      },
+      {
+        where: {
+          id: ordemId,
         },
-        {
-            where:{
-                id: ordemId
-            }
-        })
+      }
+    );
 
-        return ordemAtualizada;
-        
-    },
+    return ordemAtualizada;
+  },
 
-    async excluirOrdem(id) {
-        const ordemExcluida = WorkOrder.destroy({
-            where:{
-                id: id
-            }
-        })
-        
-        return;
-    }
-}
+  async excluirOrdem(id) {
+    const ordemExcluida = WorkOrder.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    return;
+  },
+};

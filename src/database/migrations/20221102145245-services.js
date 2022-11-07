@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
-const Sequelize = require('sequelize')
+const Sequelize = require("sequelize");
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Services', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable("Services", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,15 +25,15 @@ module.exports = {
       },
       createdAt: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       updatedAt: {
         type: Sequelize.DATE,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     });
   },
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Services');
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("Services");
+  },
 };
