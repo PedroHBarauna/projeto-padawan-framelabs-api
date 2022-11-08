@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const dbConfig = require("../../config/database");
+const Sequelize = require("sequelize");
+const dbConfig = require("../../config/database");
 
 const User = require("../models/User");
 const WorkOrder = require("../models/WorkOrder");
@@ -16,3 +18,4 @@ WorkOrder.associate(connection.models);
 // User.associate(connection.models);
 
 module.exports = connection;
+

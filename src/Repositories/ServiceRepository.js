@@ -8,7 +8,7 @@ module.exports = {
       preco,
     };
 
-    const servico = Service.create(novoServico);
+    const service = Service.create(novoServico);
 
     return servico;
   },

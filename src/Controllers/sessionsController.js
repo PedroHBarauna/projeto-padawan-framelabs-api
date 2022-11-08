@@ -25,6 +25,16 @@ class SessionsController {
       }
 
       throw new AppError("Email ou senha incorreto.");
+      if (senhaCorreta) {
+        const token = sign({}, process.env.AUTH_SECRET, {
+          subject: String(user.id),
+          expiresIn: authConfig.jwt.expiresIn,
+        });
+
+        return res.status(201).json({ user, token });
+      }
+
+      throw new AppError("Email ou senha incorreto.");
     }
 
     throw new AppError("Usuário não encontrado.");
