@@ -7,16 +7,19 @@ class ServiceOrder extends Model {
         nomeCliente: DataTypes.STRING,
         cpfCliente: DataTypes.STRING,
         emailCliente: DataTypes.STRING,
-        idServico: DataTypes.INTEGER,
         data: DataTypes.TIME,
         status: DataTypes.STRING,
         obs: DataTypes.STRING,
-        userId: DataTypes.INTEGER,
       },
       {
         sequelize,
       }
     );
+  }
+
+  static associate(models) {
+    this.belongsTo(models.User, { foreignKey: "userId", as: "funcionario" });
+    this.belongsTo(models.Service, { foreignKey: "idServico", as: "servico" });
   }
 }
 

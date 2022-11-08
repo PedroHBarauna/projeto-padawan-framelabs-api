@@ -6,7 +6,7 @@ module.exports = {
     nomeCliente,
     emailCliente,
     cpfCliente,
-    idTipoOrdem,
+    idServico,
     data,
     obs,
     status,
@@ -16,7 +16,7 @@ module.exports = {
       nomeCliente,
       emailCliente,
       cpfCliente,
-      idTipoOrdem,
+      idServico,
       data,
       obs,
       status,
@@ -24,25 +24,39 @@ module.exports = {
 
     const workOrder = WorkOrder.create(ordem);
 
-    return workOrder.dataValues;
+    return workOrder;
   },
 
   async listarOrdens(status) {
-    const workOrder = WorkOrder.findAll({
-      where: {
-        status: status,
-      },
-    });
+    let ordens = [];
 
-    return workOrder;
+    if (status) {
+      ordens = WorkOrder.findAll({
+        include: {
+          association: "funcionario",
+        },
+        where: {
+          status,
+        },
+      });
+    } else {
+      ordens = WorkOrder.findAll();
+    }
+
+    return ordens;
   },
 
   async buscarOrdemPorId(ordemId) {
     const workOrder = WorkOrder.findOne({
+      include: {
+        association: "funcionario",
+      },
       where: {
         id: ordemId,
       },
     });
+
+    return workOrder;
   },
 
   async atualizarInfos({ ordemId, status, email, idTipoOrdem }) {

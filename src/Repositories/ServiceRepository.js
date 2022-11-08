@@ -10,23 +10,31 @@ module.exports = {
 
     const service = Service.create(novoServico);
 
-    return service.dataValues;
+    return servico;
   },
 
   async index() {
-    const service = Service.findAll();
+    const servicos = Service.findAll();
 
-    return service;
+    return servicos;
   },
 
   async buscarServicoPorId(servicoId) {
-    const service = Service.findOne({
+    const servico = Service.findOne({
       where: {
         id: servicoId,
       },
     });
 
-    return service;
+    return servico;
+  },
+
+  async buscarServicoPorNome(nome) {
+    const servico = Service.findOne({
+      where: { nome },
+    });
+
+    return servico;
   },
 
   async atualizarInfos({ id, nome, descricao, preco }) {

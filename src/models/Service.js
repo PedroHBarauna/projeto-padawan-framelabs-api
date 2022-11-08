@@ -13,6 +13,10 @@ class Service extends Model {
       }
     );
   }
+
+  static associate(models) {
+    this.hasMany(models.WorkOrder, { foreignKey: "idServico", as: "ordens" });
+  }
 }
 
 module.exports = Service;

@@ -1,4 +1,5 @@
 const AppError = require("../../utils/AppError");
+const { hash } = require("bcrypt");
 
 class UserCreateService {
   constructor(userRepository) {
@@ -18,10 +19,12 @@ class UserCreateService {
         throw new AppError("Este email já está cadastrado.");
       }
 
+      const senhaComHash = await hash(senha, 8);
+
       const user = await this.userRepository.criarUsuario({
         nome,
         email,
-        senha,
+        senha: senhaComHash,
       });
 
       if (user) {

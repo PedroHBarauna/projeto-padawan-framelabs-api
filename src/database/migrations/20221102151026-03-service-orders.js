@@ -1,4 +1,5 @@
 "use strict";
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 const Sequelize = require("sequelize");
 module.exports = {
@@ -17,7 +18,6 @@ module.exports = {
       cpfCliente: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
       },
       emailCliente: {
         allowNull: true,

@@ -2,13 +2,17 @@ const AppError = require("../utils/AppError");
 
 const workOrderRepository = require("../repositories/WorkOrderRepository");
 const WorkOrderCreateService = require("../services/work-orders/WorkOrderCreateService");
+const workOrderRepository = require("../repositories/WorkOrderRepository");
+const WorkOrderCreateService = require("../services/work-orders/WorkOrderCreateService");
 const workOrderCreateService = new WorkOrderCreateService(workOrderRepository);
 
 class WorkOrdersController {
   async create(req, res) {
     const userId = req.user.id;
+  async create(req, res) {
+    const userId = req.user.id;
 
-    const { nomeCliente, emailCliente, cpfCliente, idTipoOrdem, data, obs } =
+    const { nomeCliente, emailCliente, cpfCliente, idServico, data, obs } =
       req.body;
 
     const idOrdemCriada = await workOrderCreateService.executar({
@@ -16,7 +20,7 @@ class WorkOrdersController {
       nomeCliente,
       emailCliente,
       cpfCliente,
-      idTipoOrdem,
+      idServico,
       data,
       obs,
     });

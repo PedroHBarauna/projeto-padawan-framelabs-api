@@ -6,8 +6,15 @@ class WorkOrderCreateService {
   }
 
   async executar(ordemACriar) {
-    const { userId, nomeCliente, emailCliente, cpfCliente, idTipoOrdem, obs } =
-      ordemACriar;
+    const {
+      userId,
+      nomeCliente,
+      emailCliente,
+      cpfCliente,
+      data,
+      idServico,
+      obs,
+    } = ordemACriar;
 
     if (!userId) {
       throw new AppError("Usuário inválido.");
@@ -15,26 +22,28 @@ class WorkOrderCreateService {
 
     if (!nomeCliente || !emailCliente || !cpfCliente) {
       throw new AppError("Informe nome, email e CPF do cliente!");
-    }
+    } // CPF único?
 
-    if (!idTipoOrdem) {
+    if (!idServico) {
       throw new AppError("Informe o tipo de ordem!");
     }
-    const data = new Date(2022, 11, 17);
+
     const status = "Em andamento";
 
-    const ordemId = await this.workOrderRepository.cadastrarOrdem({
+    const ordem = await this.workOrderRepository.cadastrarOrdem({
       userId,
       nomeCliente: nomeCliente.trim(),
       emailCliente: emailCliente.trim().toLowerCase(),
       cpfCliente: cpfCliente.trim(),
-      idTipoOrdem: Number(idTipoOrdem),
+      idServico: Number(idServico),
       data,
       obs: obs ?? null,
       status,
     });
 
-    return ordemId;
+    console.log(ordem);
+
+    return ordem.id;
   }
 }
 
