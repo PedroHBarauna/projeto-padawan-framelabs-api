@@ -1,19 +1,17 @@
-const AppError = require("../utils/AppError");
+const AppError = require('../utils/AppError');
 
-const workOrderRepository = require("../repositories/WorkOrderRepository");
-const WorkOrderCreateService = require("../services/work-orders/WorkOrderCreateService");
-const workOrderRepository = require("../repositories/WorkOrderRepository");
-const WorkOrderCreateService = require("../services/work-orders/WorkOrderCreateService");
+const workOrderRepository = require('../repositories/WorkOrderRepository');
+const WorkOrderCreateService = require('../services/work-orders/WorkOrderCreateService');
+
 const workOrderCreateService = new WorkOrderCreateService(workOrderRepository);
 
 class WorkOrdersController {
   async create(req, res) {
     const userId = req.user.id;
-  async create(req, res) {
-    const userId = req.user.id;
 
-    const { nomeCliente, emailCliente, cpfCliente, idServico, data, obs } =
-      req.body;
+    const {
+      nomeCliente, emailCliente, cpfCliente, idServico, data, obs,
+    } = req.body;
 
     const idOrdemCriada = await workOrderCreateService.executar({
       userId,
@@ -29,7 +27,7 @@ class WorkOrdersController {
       return res.json(`Ordem de serviço ${idOrdemCriada} criada!`);
     }
 
-    throw new AppError("Não foi possível completar o cadastro.");
+    throw new AppError('Não foi possível completar o cadastro.');
   }
 
   // listar todas
@@ -52,7 +50,7 @@ class WorkOrdersController {
       return res.json(ordem);
     }
 
-    throw new AppError("Ordem de serviço não encontrada.");
+    throw new AppError('Ordem de serviço não encontrada.');
   }
 
   // editar email do cliente, tipo da ordem, status
@@ -66,7 +64,7 @@ class WorkOrdersController {
     const ordem = await workOrderRepository.buscarOrdemPorId(id);
 
     if (ordem) {
-      const usuarioAutorizado = ordem.userId == userId;
+      const usuarioAutorizado = ordem.userId === userId;
 
       if (usuarioAutorizado) {
         const ordemAtualizada = await workOrderRepository.atualizarInfos({
@@ -80,12 +78,12 @@ class WorkOrdersController {
       }
 
       throw new AppError(
-        "Somente o funcionário responsável pode fazer alterações.",
-        401
+        'Somente o funcionário responsável pode fazer alterações.',
+        401,
       );
     }
 
-    throw new AppError("Nota não encontrada.");
+    throw new AppError('Nota não encontrada.');
   }
 
   // excluir
@@ -96,7 +94,7 @@ class WorkOrdersController {
     const ordem = await workOrderRepository.buscarOrdemPorId(id);
 
     if (ordem) {
-      const usuarioAutorizado = ordem.userId == userId;
+      const usuarioAutorizado = ordem.userId === userId;
 
       if (usuarioAutorizado) {
         await workOrderRepository.excluirOrdem(id);
@@ -105,12 +103,12 @@ class WorkOrdersController {
       }
 
       throw new AppError(
-        "Somente o funcionário responsável pode excluir a ordem de serviço.",
-        401
+        'Somente o funcionário responsável pode excluir a ordem de serviço.',
+        401,
       );
     }
 
-    throw new AppError("Ordem de serviço não encontrada.");
+    throw new AppError('Ordem de serviço não encontrada.');
   }
 }
 

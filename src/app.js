@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 const routes = require("../src/routes");
-const routes = require("../src/routes");
+
 app.use(routes);
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
