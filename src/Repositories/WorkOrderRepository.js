@@ -1,4 +1,4 @@
-const WorkOrder = require("../models/WorkOrder");
+const WorkOrder = require('../models/WorkOrder');
 
 module.exports = {
   async cadastrarOrdem({
@@ -33,7 +33,7 @@ module.exports = {
     if (status) {
       ordens = WorkOrder.findAll({
         include: {
-          association: "funcionario",
+          association: 'funcionario',
         },
         where: {
           status,
@@ -49,7 +49,7 @@ module.exports = {
   async buscarOrdemPorId(ordemId) {
     const workOrder = WorkOrder.findOne({
       include: {
-        association: "funcionario",
+        association: 'funcionario',
       },
       where: {
         id: ordemId,
@@ -59,30 +59,30 @@ module.exports = {
     return workOrder;
   },
 
-  async atualizarInfos({ ordemId, status, email, idTipoOrdem }) {
+  async atualizarInfos({
+    ordemId, status, email, idTipoOrdem,
+  }) {
     const ordemAtualizada = WorkOrder.update(
       {
-        status: status,
-        email: email,
+        status,
+        email,
         idServico: idTipoOrdem,
       },
       {
         where: {
           id: ordemId,
         },
-      }
+      },
     );
 
     return ordemAtualizada;
   },
 
   async excluirOrdem(id) {
-    const ordemExcluida = WorkOrder.destroy({
+    WorkOrder.destroy({
       where: {
-        id: id,
+        id,
       },
     });
-
-    return;
   },
 };

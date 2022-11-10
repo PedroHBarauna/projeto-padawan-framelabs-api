@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require("sequelize");
+const { Model, DataTypes } = require('sequelize');
 
 class ServiceOrder extends Model {
   static init(sequelize) {
@@ -13,13 +13,13 @@ class ServiceOrder extends Model {
       },
       {
         sequelize,
-      }
+      },
     );
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: "userId", as: "funcionario" });
-    this.belongsTo(models.Service, { foreignKey: "idServico", as: "servico" });
+    this.belongsTo(models.User, { foreignKey: 'userId', as: 'funcionario' });
+    this.belongsTo(models.Service, { foreignKey: 'idServico', as: 'servico' });
   }
 }
 

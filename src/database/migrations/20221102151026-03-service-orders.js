@@ -1,10 +1,9 @@
-"use strict";
-"use strict";
 /** @type {import('sequelize-cli').Migration} */
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("ServiceOrders", {
+    await queryInterface.createTable('ServiceOrders', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,9 +24,9 @@ module.exports = {
       },
       idServico: {
         type: Sequelize.INTEGER,
-        references: { model: "Services", key: "id" },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        references: { model: 'Services', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       data: {
         allowNull: false,
@@ -43,9 +42,9 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        references: { model: "Users", key: "id" },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        references: { model: 'Users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -59,6 +58,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("ServiceOrder");
+    await queryInterface.dropTable('ServiceOrder');
   },
 };

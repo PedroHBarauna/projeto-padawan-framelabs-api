@@ -2,15 +2,15 @@ class UserRepositoryInMemory {
   usuarios = [
     {
       id: 1,
-      nome: "Teste 1",
-      email: "teste@mail.com",
-      senha: "123",
+      nome: 'Teste 1',
+      email: 'teste@mail.com',
+      senha: '123',
     },
     {
       id: 2,
-      nome: "Teste 2",
-      email: "teste2@mail.com",
-      senha: "123",
+      nome: 'Teste 2',
+      email: 'teste2@mail.com',
+      senha: '123',
     },
   ];
 
@@ -28,9 +28,9 @@ class UserRepositoryInMemory {
   }
 
   async encontrarPorId(id) {
-    const usuario = this.usuarios.find((usuario) => usuario.id == id);
+    const usuarioDesejado = this.usuarios.find((usuario) => usuario.id === id);
 
-    return usuario;
+    return usuarioDesejado;
   }
 
   async index() {
@@ -39,7 +39,7 @@ class UserRepositoryInMemory {
 
   async encontrarPorEmail(email) {
     const usuarioComEsteEmail = this.usuarios.find(
-      (usuario) => usuario.email == email
+      (usuario) => usuario.email === email,
     );
 
     return usuarioComEsteEmail;

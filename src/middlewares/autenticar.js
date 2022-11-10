@@ -1,13 +1,12 @@
-const authConfig = require("../config/jwt");
-const AppError = require("../utils/AppError");
-const { verify } = require("jsonwebtoken");
-const { encontrarPorEmail } = require("../repositories/UserRepositoryInMemory");
+const { verify } = require('jsonwebtoken');
+const authConfig = require('../config/jwt');
+const AppError = require('../utils/AppError');
 
 async function autenticar(req, res, next) {
   const tokenComBearer = req.headers.authorization;
 
   if (tokenComBearer) {
-    const [, token] = tokenComBearer.split(" ");
+    const [, token] = tokenComBearer.split(' ');
 
     try {
       const { sub: userId } = verify(token, authConfig.jwt.secret);
@@ -18,10 +17,10 @@ async function autenticar(req, res, next) {
 
       return next();
     } catch {
-      throw new AppError("Token de autorização inválido.", 401);
+      throw new AppError('Token de autorização inválido.', 401);
     }
   } else {
-    throw new AppError("Token de autorização não encontrado.", 401);
+    throw new AppError('Token de autorização não encontrado.', 401);
   }
 }
 

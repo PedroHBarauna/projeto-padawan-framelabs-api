@@ -60,7 +60,7 @@ class ServicesController {
     const idValidado = validarId(req.params);
 
     if (idValidado.error) {
-      throw new AppError(dadosValidados.error.toString());
+      throw new AppError(idValidado.error.toString());
     }
 
     const { id } = req.params;

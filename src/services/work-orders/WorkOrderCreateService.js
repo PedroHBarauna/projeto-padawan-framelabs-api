@@ -1,4 +1,4 @@
-const AppError = require("../../utils/AppError");
+const AppError = require('../../utils/AppError');
 
 class WorkOrderCreateService {
   constructor(workOrderRepository) {
@@ -17,18 +17,18 @@ class WorkOrderCreateService {
     } = ordemACriar;
 
     if (!userId) {
-      throw new AppError("Usuário inválido.");
+      throw new AppError('Usuário inválido.');
     }
 
     if (!nomeCliente || !emailCliente || !cpfCliente) {
-      throw new AppError("Informe nome, email e CPF do cliente!");
+      throw new AppError('Informe nome, email e CPF do cliente!');
     } // CPF único?
 
     if (!idServico) {
-      throw new AppError("Informe o tipo de ordem!");
+      throw new AppError('Informe o tipo de ordem!');
     }
 
-    const status = "Em andamento";
+    const status = 'Em andamento';
 
     const ordem = await this.workOrderRepository.cadastrarOrdem({
       userId,
@@ -40,8 +40,6 @@ class WorkOrderCreateService {
       obs: obs ?? null,
       status,
     });
-
-    console.log(ordem);
 
     return ordem.id;
   }

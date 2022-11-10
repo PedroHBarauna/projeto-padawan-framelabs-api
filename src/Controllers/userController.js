@@ -1,7 +1,8 @@
-const userRepository = require("../repositories/UserRepository");
-const AppError = require("../utils/AppError");
+const userRepository = require('../repositories/UserRepository');
+const AppError = require('../utils/AppError');
 
-const UserCreateService = require("../services/users/UserCreateService");
+const UserCreateService = require('../services/users/UserCreateService');
+
 const userCreateService = new UserCreateService(userRepository);
 class UserController {
   async index(req, res) {
@@ -11,7 +12,7 @@ class UserController {
       return res.json(usuarios);
     }
 
-    throw new AppError("Nenhum usuário cadastrado.");
+    throw new AppError('Nenhum usuário cadastrado.');
   }
 
   async show(req, res) {
@@ -19,7 +20,7 @@ class UserController {
     const usuario = await userRepository.encontrarPorId(id);
 
     if (!usuario) {
-      throw new AppError("Usuário não encontrado.");
+      throw new AppError('Usuário não encontrado.');
     }
 
     return res.json(usuario);
@@ -36,7 +37,7 @@ class UserController {
         .json(`${user.nome} - id ${user.id} criado com sucesso!`);
     }
 
-    throw new AppError("Informe nome, email e senha.");
+    throw new AppError('Informe nome, email e senha.');
   }
 }
 
