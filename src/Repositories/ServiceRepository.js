@@ -1,4 +1,4 @@
-const Service = require("../models/Service");
+const Service = require('../models/Service');
 
 module.exports = {
   async criarServico({ nome, descricao, preco }) {
@@ -8,7 +8,7 @@ module.exports = {
       preco,
     };
 
-    const service = Service.create(novoServico);
+    const servico = Service.create(novoServico);
 
     return servico;
   },
@@ -37,29 +37,30 @@ module.exports = {
     return servico;
   },
 
-  async atualizarInfos({ id, nome, descricao, preco }) {
+  async atualizarInfos({
+    id, nome, descricao, preco,
+  }) {
     const servicoAtualizado = Service.update(
       {
-        nome: nome,
-        descricao: descricao,
-        preco: preco,
+        nome,
+        descricao,
+        preco,
       },
       {
         where: {
-          id: id,
+          id,
         },
-      }
+      },
     );
 
     return servicoAtualizado;
   },
 
   async excluirServico(id) {
-    const servicoExcluido = Service.destroy({
+    Service.destroy({
       where: {
-        id: id,
+        id,
       },
     });
-    return;
   },
 };

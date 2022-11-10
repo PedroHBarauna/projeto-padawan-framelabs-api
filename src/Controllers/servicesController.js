@@ -1,6 +1,8 @@
-const AppError = require("../utils/AppError");
+const AppError = require('../utils/AppError');
 
-const serviceRepository = require("../repositories/ServiceRepository");
+const serviceRepository = require('../repositories/ServiceRepository');
+
+const { validarCriarServico, validarEditarServico, validarId } = require('../utils/validateInputs');
 
 class ServicesController {
   // TIPOS de serviço
@@ -9,33 +11,27 @@ class ServicesController {
 
   // criar, atualizar, deletar, mostrar
   async create(req, res) {
-    const { nome, descricao, preco } = req.body;
+    const dadosValidados = validarCriarServico(req.body);
 
-    if (nome && descricao && preco) {
-      if (isNaN(preco)) {
-        throw new AppError("Informe um número válido para o preço.");
-      }
-
-      const nomeIndisponivel = await serviceRepository.buscarServicoPorNome(
-        nome
-      );
-
-      if (nomeIndisponivel) {
-        throw new AppError(
-          `Não foi possível cadastrar, pois já existe um serviço chamado ${nome}!`
-        );
-      }
-
-      const servico = await serviceRepository.criarServico({
-        nome,
-        descricao,
-        preco,
-      });
-
-      return res.status(201).json(`Serviço ${servico.id} - '${nome}' criado.`);
+    if (dadosValidados.error) {
+      throw new AppError(dadosValidados.error.toString());
     }
 
-    throw new AppError("Informe nome, descrição e preço do serviço.");
+    const { nome, descricao, preco } = req.body;
+
+    const nomeIndisponivel = await serviceRepository.buscarServicoPorNome(nome);
+
+    if (nomeIndisponivel) {
+      throw new AppError(`Não foi possível cadastrar, pois já existe um serviço chamado ${nome}!`);
+    }
+
+    const servico = await serviceRepository.criarServico({
+      nome,
+      descricao,
+      preco,
+    });
+
+    return res.status(201).json(`Serviço ${servico.id} - '${nome}' criado.`);
   }
 
   async index(req, res) {
@@ -45,7 +41,7 @@ class ServicesController {
       return res.json(servicos);
     }
 
-    throw new AppError("Não foram encontrados registros.");
+    throw new AppError('Não foram encontrados registros.');
   }
 
   async show(req, res) {
@@ -57,17 +53,25 @@ class ServicesController {
       return res.json(servico);
     }
 
-    throw new AppError("Serviço não encontrado.");
+    throw new AppError('Serviço não encontrado.');
   }
 
   async update(req, res) {
+    const idValidado = validarId(req.params);
+
+    if (idValidado.error) {
+      throw new AppError(dadosValidados.error.toString());
+    }
+
     const { id } = req.params;
 
-    const { nome, descricao, preco } = req.body;
+    const dadosValidados = validarEditarServico(req.body);
 
-    if (preco && isNaN(preco)) {
-      throw new AppError("Informe um número válido para o preço.");
+    if (dadosValidados.error) {
+      throw new AppError(dadosValidados.error.toString());
     }
+
+    const { nome, descricao, preco } = req.body;
 
     const servico = await serviceRepository.buscarServicoPorId(id);
 
@@ -91,7 +95,7 @@ class ServicesController {
       return res.json(`Serviço ${id} excluído com sucesso.`);
     }
 
-    throw new AppError("Serviço não encontrado.");
+    throw new AppError('Serviço não encontrado.');
   }
 }
 
